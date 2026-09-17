@@ -1,0 +1,170 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Achievement {
+  id           String   @id @default(uuid())
+  title        String
+  category     String
+  organization String?
+  date         DateTime?
+  description  String?
+  result       String?
+  location     String?
+  image        String?
+  proofUrl     String?
+  externalUrl  String?
+  technologies String?
+  featured     Boolean  @default(false)
+  visibility   String   @default("Published") // Published, Draft, Private
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model HallOfFame {
+  id               String   @id @default(uuid())
+  organization     String
+  recognitionTitle String
+  date             DateTime?
+  vulnerabilityType String?
+  severity         String?
+  cvss             String?
+  description      String?
+  hallOfFameUrl    String?
+  screenshot       String?
+  featured         Boolean  @default(false)
+  visibility       String   @default("Published")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model BugHunting {
+  id               String   @id @default(uuid())
+  title            String
+  organization     String
+  vulnerabilityType String?
+  severity         String?
+  cvss             String?
+  dateReported     DateTime?
+  status           String   @default("Reported") // Reported, Confirmed, Fixed, Acknowledged, Hall of Fame, Public
+  description      String?
+  impact           String?
+  recognitionType  String?
+  proofUrl         String?
+  hallOfFameUrl    String?
+  screenshot       String?
+  technologies     String?
+  featured         Boolean  @default(false)
+  visibility       String   @default("Published")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model CTF {
+  id             String   @id @default(uuid())
+  competition    String
+  organizer      String?
+  date           DateTime?
+  category       String?
+  rank           String?
+  team           String?
+  score          String?
+  description    String?
+  certificate    String?
+  competitionUrl String?
+  writeupUrl     String?
+  featured       Boolean  @default(false)
+  visibility     String   @default("Published")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Certification {
+  id             String   @id @default(uuid())
+  name           String
+  issuer         String
+  issueDate      DateTime?
+  expirationDate DateTime?
+  credentialId   String?
+  credentialUrl  String?
+  certificateImg String?
+  description    String?
+  featured       Boolean  @default(false)
+  visibility     String   @default("Published")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Project {
+  id           String   @id @default(uuid())
+  name         String
+  description  String?
+  technologies String?
+  githubUrl    String?
+  demoUrl      String?
+  image        String?
+  featured     Boolean  @default(false)
+  displayOrder Int      @default(0)
+  visibility   String   @default("Published")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Recognition {
+  id           String   @id @default(uuid())
+  title        String
+  organization String
+  date         DateTime?
+  description  String?
+  link         String?
+  image        String?
+  featured     Boolean  @default(false)
+  visibility   String   @default("Published")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Media {
+  id        String   @id @default(uuid())
+  filename  String
+  mimetype  String
+  size      Int
+  url       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SiteSettings {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  action    String
+  entity    String
+  entityId  String?
+  userId    String?
+  details   String?
+  createdAt DateTime @default(now())
+}
