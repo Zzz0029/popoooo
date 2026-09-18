@@ -3,9 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -19,7 +18,7 @@ model User {
 }
 
 model Achievement {
-  id           String   @id @default(uuid())
+  id           String    @id @default(uuid())
   title        String
   category     String
   organization String?
@@ -31,54 +30,54 @@ model Achievement {
   proofUrl     String?
   externalUrl  String?
   technologies String?
-  featured     Boolean  @default(false)
-  visibility   String   @default("Published") // Published, Draft, Private
-  displayOrder Int      @default(0)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  featured     Boolean   @default(false)
+  visibility   String    @default("Published")
+  displayOrder Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
 
 model HallOfFame {
-  id               String   @id @default(uuid())
-  organization     String
-  recognitionTitle String
-  date             DateTime?
+  id                String    @id @default(uuid())
+  organization      String
+  recognitionTitle  String
+  date              DateTime?
   vulnerabilityType String?
-  severity         String?
-  cvss             String?
-  description      String?
-  hallOfFameUrl    String?
-  screenshot       String?
-  featured         Boolean  @default(false)
-  visibility       String   @default("Published")
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  severity          String?
+  cvss              String?
+  description       String?
+  hallOfFameUrl     String?
+  screenshot        String?
+  featured          Boolean   @default(false)
+  visibility        String    @default("Published")
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 }
 
 model BugHunting {
-  id               String   @id @default(uuid())
-  title            String
-  organization     String
+  id                String    @id @default(uuid())
+  title             String
+  organization      String
   vulnerabilityType String?
-  severity         String?
-  cvss             String?
-  dateReported     DateTime?
-  status           String   @default("Reported") // Reported, Confirmed, Fixed, Acknowledged, Hall of Fame, Public
-  description      String?
-  impact           String?
-  recognitionType  String?
-  proofUrl         String?
-  hallOfFameUrl    String?
-  screenshot       String?
-  technologies     String?
-  featured         Boolean  @default(false)
-  visibility       String   @default("Published")
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  severity          String?
+  cvss              String?
+  dateReported      DateTime?
+  status            String    @default("Reported")
+  description       String?
+  impact            String?
+  recognitionType   String?
+  proofUrl          String?
+  hallOfFameUrl     String?
+  screenshot        String?
+  technologies      String?
+  featured          Boolean   @default(false)
+  visibility        String    @default("Published")
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 }
 
 model CTF {
-  id             String   @id @default(uuid())
+  id             String    @id @default(uuid())
   competition    String
   organizer      String?
   date           DateTime?
@@ -90,14 +89,14 @@ model CTF {
   certificate    String?
   competitionUrl String?
   writeupUrl     String?
-  featured       Boolean  @default(false)
-  visibility     String   @default("Published")
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  featured       Boolean   @default(false)
+  visibility     String    @default("Published")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 }
 
 model Certification {
-  id             String   @id @default(uuid())
+  id             String    @id @default(uuid())
   name           String
   issuer         String
   issueDate      DateTime?
@@ -106,10 +105,10 @@ model Certification {
   credentialUrl  String?
   certificateImg String?
   description    String?
-  featured       Boolean  @default(false)
-  visibility     String   @default("Published")
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  featured       Boolean   @default(false)
+  visibility     String    @default("Published")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 }
 
 model Project {
@@ -128,17 +127,17 @@ model Project {
 }
 
 model Recognition {
-  id           String   @id @default(uuid())
+  id           String    @id @default(uuid())
   title        String
   organization String
   date         DateTime?
   description  String?
   link         String?
   image        String?
-  featured     Boolean  @default(false)
-  visibility   String   @default("Published")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  featured     Boolean   @default(false)
+  visibility   String    @default("Published")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
 
 model Media {

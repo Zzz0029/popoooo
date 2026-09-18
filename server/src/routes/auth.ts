@@ -14,16 +14,16 @@ router.post('/login', authLimiter, async (req, res) => {
   }
   
   try {
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique({ where: { email: email.trim().toLowerCase() } });
     
     if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: 'Invalid email or password' });
     }
     
     const valid = await argon2.verify(user.password, password);
     
     if (!valid) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: 'Invalid email or password' });
     }
     
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET || 'secret', { expiresIn: '1d' });
@@ -31,14 +31,14 @@ router.post('/login', authLimiter, async (req, res) => {
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 24 * 60 * 60 * 1000 // 1 day
+      sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+      maxAge: 24 * 60 * 60 * 1000
     });
     
-    res.json({ message: 'Logged in successfully', user: { id: user.id, email: user.email, name: user.name } });
+    return res.json({ message: 'Logged in successfully', user: { id: user.id, email: user.email, name: user.name } });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error' });
+    console.error('Login error:', error);
+    return res.status(500).json({ error: 'Internal server authentication error' });
   }
 });
 
